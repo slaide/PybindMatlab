@@ -28,16 +28,10 @@ void checkVectorMatrixCompatibility(SpMat& A, RefVector& b){
 void cgTimingTest(SpMat&A, RefVector& b, RefVector& x0){
     Eigen::ConjugateGradient<SpMat, Eigen::Lower|Eigen::Upper, Eigen::SimplicialCholesky<SpMat, 1>> cg;
     VectorXd result;
-    try{
-        checkVectorMatrixCompatibility(A, b);
-    } catch (std::invalid_argument const&e){
-        std::cout<<"rows in rhs must match cols in matrix"<<std::endl;
-    }
-    try{
-        checkVectorMatrixCompatibility(A,x0);
-    } catch (std::invalid_argument const&e){
-        std::cout<<"rows in initial guess must match cols in matrix"<<std::endl;
-    }
+
+    checkVectorMatrixCompatibility(A, b);
+    checkVectorMatrixCompatibility(A,x0);
+
     cg.setTolerance(1e-7);
     cg.setMaxIterations(100000);
     cg.compute(A);
@@ -49,16 +43,10 @@ void cgTimingTest(SpMat&A, RefVector& b, RefVector& x0){
 VectorXd cg(SpMat& A, RefVector& b, RefVector& x0){
     Eigen::ConjugateGradient<SpMat, Eigen::Lower|Eigen::Upper, Eigen::SimplicialCholesky<SpMat, 1>> cg;
     VectorXd result;
-    try{
-        checkVectorMatrixCompatibility(A, b);
-    } catch (std::invalid_argument const&e){
-        std::cout<<"rows in rhs must match cols in matrix"<<std::endl;
-    }
-    try{
-        checkVectorMatrixCompatibility(A,x0);
-    } catch (std::invalid_argument const&e){
-        std::cout<<"rows in initial guess must match cols in matrix"<<std::endl;
-    }
+
+    checkVectorMatrixCompatibility(A, b);
+    checkVectorMatrixCompatibility(A,x0);
+    
     cg.setTolerance(1e-7);
     cg.setMaxIterations(100000);
     cg.compute(A);
